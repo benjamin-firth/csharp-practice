@@ -26,13 +26,20 @@ namespace GradeBook
         string Name { get; }
         event GradeAddedDelegate GradeAdded;
     }
-    public abstract class Book : NamedObject
+    public abstract class Book : NamedObject, IBook
     {
         public Book(string name) : base(name)
         {
         }
 
+        public virtual event GradeAddedDelegate GradeAdded;
+
         public abstract void AddGrade(double grade);
+
+        public virtual  Stats GetStats()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class InMemoryBook : Book
@@ -85,9 +92,9 @@ namespace GradeBook
             }
         }
 
-        public event GradeAddedDelegate GradeAdded;
+        public override event GradeAddedDelegate GradeAdded;
 
-        public Stats GetStats()
+        public override Stats GetStats()
         {
             var total = new Stats();
             total.Average = 0.0;

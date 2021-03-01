@@ -119,46 +119,10 @@ namespace GradeBook
         public override Stats GetStats()
         {
             var total = new Stats();
-            total.Average = 0.0;
-            total.High = double.MinValue;
-            total.Low = double.MaxValue;
 
-            foreach(var num in grades)
+            for(var i = 0; i < grades.Count; i++)
             {
-                if(num > total.High)
-                {
-                    total.High = num;
-                }
-                if(num < total.Low)
-                {
-                    total.Low = num;
-                }
-                total.Average += num;
-            }
-
-            total.Average /= grades.Count;
-
-            switch(total.Average)
-            {
-                case var d when d >= 90.0:
-                    total.Letter = 'A';
-                    break;
-
-                case var d when d >= 80.0:
-                    total.Letter = 'B';
-                    break;
-
-                case var d when d >= 70.0:
-                    total.Letter = 'C';
-                    break;
-
-                case var d when d >= 60.0:
-                    total.Letter = 'D';
-                    break;
-
-                default:
-                    total.Letter = 'F';
-                    break;
+                total.Add(grades[i]);
             }
 
             return total;
